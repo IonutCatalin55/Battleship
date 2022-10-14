@@ -89,15 +89,51 @@ public class Battleship {
         }
     }
 
-    public static void printBattleField(String a, String b, String[][] arr) {
+    public Battleship() {
+    }
+
+    public static void printBattleField(String a, String b, String[][] arr, int battleshipSize) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 arr[i][j] = "~";
                 arr[i][0] = LETTER_1[i];
                 arr[0][j] = NUM[j];
-
             }
         }
+        int varI = 0;
+        int varJ = 0;
+        if (b.charAt(0) == a.charAt(0)) {
+            String compare = a.charAt(0) + "";
+            for (int i = 0; i < arr.length; i++) {
+                for (int j = 0; j < arr[i].length; j++) {
+                    if (compare.equals(arr[i][j])) {
+                        varI = i;
+                        varJ = j;
+                    }
+                }
+            }
+            int aOrizontal = Integer.parseInt(a.charAt(1) + "");
+            int bOrizontal = Integer.parseInt(b.charAt(1) + "");
+
+            if (aOrizontal < bOrizontal){
+                for (int i = 0; i < arr.length; i++) {
+                    for (int j = 0; j < arr[i].length; j++) {
+                        arr[a.indexOf(a.charAt(0))]
+                    }
+                }
+            }
+        } else if (b.charAt(1) == a.charAt(1)) {
+            String compare = a.charAt(1) + "";
+            for (int i = 0; i < arr.length; i++) {
+                for (int j = 0; j < arr[i].length; j++) {
+                    if (compare.equals(arr[i][j])) {
+                        varI = i;
+                        varJ = j;
+                    }
+                }
+            }
+        }
+
 
         arr[0][0] = " ";
 
