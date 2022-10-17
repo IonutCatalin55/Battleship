@@ -5,23 +5,40 @@ import java.util.Scanner;
 public class Main {
 
 
-
     public static void main(String[] args) {
         String[][] field = new String[11][11];
         printInitialBattleField(field);
+
         System.out.println("\nEnter the coordinates of the Aircraft Carrier (5 cells):\n");
+
         Scanner scanner = new Scanner(System.in);
+        String a = scanner.next();
+        String b = scanner.next();
+        a = a.toUpperCase();
+        b = b.toUpperCase();
+
         Battleship aircraftCarrier = new Battleship();
-
-        aircraftCarrier.
-
-        while (true) {
-            String a = scanner.nextLine();
-            String b = scanner.nextLine();
-            a = a.toUpperCase();
-            b = b.toUpperCase();
-            if (a.length() < 2 || b.length() < 2) {
-                //verifyDiagonal(a, b, field);
+        if (a.length() <= 2 && b.length() <= 2) {
+            while (true) {
+                if (aircraftCarrier.toClose(a, b, field)) {
+                    System.out.println("Error! You placed it too close to another one. Try again:");
+                    a = scanner.next();
+                    b = scanner.next();
+                } else {
+                    break;
+                }
+            }
+            while (true) {
+                if (aircraftCarrier.horizontalNumberCheck(a, b, 5) &&
+                        aircraftCarrier.verticalLetterCheck(a, b, 5) &&
+                        aircraftCarrier.verifyDiagonal(a, b, field)) {
+                    aircraftCarrier.printBattleField(a, b, field);
+                    break;
+                } else {
+                    System.out.println("Error! Wrong ship location! Try again:");
+                    a = scanner.next();
+                    b = scanner.next();
+                }
             }
         }
 
@@ -32,7 +49,7 @@ public class Main {
             for (int j = 0; j < arr[i].length; j++) {
                 arr[i][j] = "~";
                 arr[i][0] = Battleship.LETTER_1[i];
-                arr[0][j] = Battleship.NUM[i];
+                arr[0][j] = Battleship.NUM[j];
             }
         }
         arr[0][0] = " ";

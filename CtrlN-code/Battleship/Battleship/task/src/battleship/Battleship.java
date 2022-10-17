@@ -14,7 +14,7 @@ public class Battleship {
     public int varI = 0;
     public int varJ = 0;
 
-    public void HorizontalNumberCheck(String aaa, String bbb, int battleshipSize) {
+    public boolean horizontalNumberCheck(String aaa, String bbb, int battleshipSize) {
         char[] arr1 = aaa.toCharArray();
         char[] arr2 = bbb.toCharArray();
         for (char c : arr1) {
@@ -31,18 +31,16 @@ public class Battleship {
                     int cc = Integer.parseInt(c + "");
                     int c1c1 = Integer.parseInt((c1 + ""));
                     int dif = cc - c1c1;
-                    if (Math.abs(dif) == battleshipSize) {
+                    if (Math.abs(dif) + 1 == battleshipSize) {
                         aircraftNumberLength = true;
                     }
                 }
             }
         }
-        if (!numberOneOnField || !numberTwoOnField || !aircraftNumberLength) {
-            System.out.println("Error! Wrong ship location! Try again:");
-        }
+        return numberOneOnField && numberTwoOnField && aircraftNumberLength;
     }
 
-    public void VerticalLetterCheck(String aaa, String bbb, int battleshipSize) {
+    public boolean verticalLetterCheck(String aaa, String bbb, int battleshipSize) {
         char[] arr1 = aaa.toCharArray();
         char[] arr2 = bbb.toCharArray();
         for (char c : arr1) {
@@ -51,43 +49,42 @@ public class Battleship {
                     for (String s : LETTER_1) {
                         if ((c + "").equals(s)) {
                             letterOneOnField = true;
+                            break;
                         }
-                        if ((c1 + "").equals(s)) {
+                    }
+                    for (String s1 : LETTER_1) {
+                        if ((c1 + "").equals(s1)) {
                             letterTwoOnField = true;
+                            break;
                         }
                     }
-                    int dif = c1 - c;
-                    if (Math.abs(dif) == battleshipSize) {
-                        aircraftLetterLength = true;
-                    }
+                }
+                int dif = Integer.parseInt(arr1[1] + "") - Integer.parseInt(arr2[1] + "");
+                if (Math.abs(dif) + 1 == battleshipSize) {
+                    aircraftLetterLength = true;
                 }
             }
         }
-        if (!letterOneOnField || !letterTwoOnField || !aircraftLetterLength) {
-            System.out.println("Error! Wrong ship location! Try again:");
-        }
+
+        return letterOneOnField && letterTwoOnField && aircraftLetterLength;
     }
 
-    public void verifyDiagonal(String aa, String ba, String[][] arr) {
+    public boolean verifyDiagonal(String aa, String ba, String[][] arr) {
         for (int i = 1; i < arr.length; i++) {
             for (int j = 1; j < arr[i].length; j++) {
-                if ((arr[i][0] + arr[0][j]).equals(aa) && (arr[i][0] + arr[0][j]).equals(ba)) {
-                    char[] arr1 = aa.toCharArray();
-                    char[] arr2 = ba.toCharArray();
-                    for (char c : arr1) {
-                        for (char c1 : arr2) {
-                            if (c == c1) {
-                                diagonal = false;
-                                break;
-                            }
+                char[] arr1 = aa.toCharArray();
+                char[] arr2 = ba.toCharArray();
+                for (char c : arr1) {
+                    for (char c1 : arr2) {
+                        if (c == c1) {
+                            diagonal = false;
+                            break;
                         }
-                    }
-                    if (diagonal) {
-                        System.out.println("Error! Wrong ship location! Try again:");
                     }
                 }
             }
         }
+        return !diagonal;
     }
 
     public Battleship() {
