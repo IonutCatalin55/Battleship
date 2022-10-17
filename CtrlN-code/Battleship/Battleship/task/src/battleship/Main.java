@@ -11,6 +11,9 @@ public class Main {
         printInitialBattleField(field);
         System.out.println("\nEnter the coordinates of the Aircraft Carrier (5 cells):\n");
         Scanner scanner = new Scanner(System.in);
+        Battleship aircraftCarrier = new Battleship();
+
+        aircraftCarrier.
 
         while (true) {
             String a = scanner.nextLine();

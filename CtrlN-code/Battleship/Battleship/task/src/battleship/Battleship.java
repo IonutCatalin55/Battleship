@@ -2,18 +2,19 @@ package battleship;
 
 public class Battleship {
 
-    public static boolean diagonal = true;
+    public boolean diagonal = true;
     public static final String[] LETTER_1 = {"0", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
     public static final String[] NUM = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-    public static boolean letterOneOnField = false;
-    public static boolean letterTwoOnField = false;
-    public static boolean aircraftLetterLength = false;
-    public static boolean numberOneOnField = false;
-    public static boolean numberTwoOnField = false;
+    public boolean letterOneOnField = false;
+    public boolean letterTwoOnField = false;
+    public boolean aircraftLetterLength = false;
+    public boolean numberOneOnField = false;
+    public boolean numberTwoOnField = false;
+    public boolean aircraftNumberLength = false;
+    public int varI = 0;
+    public int varJ = 0;
 
-    public static boolean aircraftNumberLength = false;
-
-    public static void HorizontalNumberCheck(String aaa, String bbb, int battleshipSize) {
+    public void HorizontalNumberCheck(String aaa, String bbb, int battleshipSize) {
         char[] arr1 = aaa.toCharArray();
         char[] arr2 = bbb.toCharArray();
         for (char c : arr1) {
@@ -41,7 +42,7 @@ public class Battleship {
         }
     }
 
-    public static void VerticalLetterCheck(String aaa, String bbb, int battleshipSize) {
+    public void VerticalLetterCheck(String aaa, String bbb, int battleshipSize) {
         char[] arr1 = aaa.toCharArray();
         char[] arr2 = bbb.toCharArray();
         for (char c : arr1) {
@@ -67,7 +68,7 @@ public class Battleship {
         }
     }
 
-    public static void verifyDiagonal(String aa, String ba, String[][] arr) {
+    public void verifyDiagonal(String aa, String ba, String[][] arr) {
         for (int i = 1; i < arr.length; i++) {
             for (int j = 1; j < arr[i].length; j++) {
                 if ((arr[i][0] + arr[0][j]).equals(aa) && (arr[i][0] + arr[0][j]).equals(ba)) {
@@ -92,7 +93,7 @@ public class Battleship {
     public Battleship() {
     }
 
-    public static void printBattleField(String a, String b, String[][] arr, int battleshipSize) {
+    public void printBattleField(String a, String b, String[][] arr) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 arr[i][j] = "~";
@@ -100,36 +101,45 @@ public class Battleship {
                 arr[0][j] = NUM[j];
             }
         }
-        int varI = 0;
-        int varJ = 0;
+
+
         if (b.charAt(0) == a.charAt(0)) {
             String compare = a.charAt(0) + "";
             for (int i = 0; i < arr.length; i++) {
                 for (int j = 0; j < arr[i].length; j++) {
                     if (compare.equals(arr[i][j])) {
                         varI = i;
-                        varJ = j;
+                        break;
                     }
                 }
             }
             int aOrizontal = Integer.parseInt(a.charAt(1) + "");
             int bOrizontal = Integer.parseInt(b.charAt(1) + "");
 
-            if (aOrizontal < bOrizontal){
-                for (int i = 0; i < arr.length; i++) {
-                    for (int j = 0; j < arr[i].length; j++) {
-                        arr[a.indexOf(a.charAt(0))]
-                    }
+
+            for (int i = varI; i <= varI; i++) {
+                for (int j = Math.min(aOrizontal, bOrizontal); j <= Math.max(aOrizontal, bOrizontal); j++) {
+                    arr[i][j] = "O";
                 }
             }
         } else if (b.charAt(1) == a.charAt(1)) {
-            String compare = a.charAt(1) + "";
+            varJ = Integer.parseInt(a.charAt(1) + "");
+            int indexOfLetterA = 0;
+            int indexOfLetterB = 0;
+
             for (int i = 0; i < arr.length; i++) {
                 for (int j = 0; j < arr[i].length; j++) {
-                    if (compare.equals(arr[i][j])) {
-                        varI = i;
-                        varJ = j;
+                    if ((a.charAt(0) + "").equals(arr[i][j])) {
+                        indexOfLetterA = i;
                     }
+                    if ((b.charAt(0) + "").equals(arr[i][j])) {
+                        indexOfLetterB = i;
+                    }
+                }
+            }
+            for (int i = Math.min(indexOfLetterA, indexOfLetterB); i <= Math.max(indexOfLetterA, indexOfLetterB); i++) {
+                for (int j = varJ; j <= varJ; j++) {
+                    arr[i][j] = "O";
                 }
             }
         }
@@ -144,4 +154,57 @@ public class Battleship {
             System.out.println();
         }
     }
+
+    public boolean toClose(String a, String b, String[][] arr) {
+        boolean toClose = false;
+        if (b.charAt(0) == a.charAt(0)) {
+            String compare = a.charAt(0) + "";
+            for (int i = 0; i < arr.length; i++) {
+                for (int j = 0; j < arr[i].length; j++) {
+                    if (compare.equals(arr[i][j])) {
+                        varI = i;
+                        break;
+                    }
+                }
+            }
+            int aOrizontal = Integer.parseInt(a.charAt(1) + "");
+            int bOrizontal = Integer.parseInt(b.charAt(1) + "");
+
+
+            for (int i = varI - 1; i <= varI + 1; i++) {
+                for (int j = Math.min(aOrizontal, bOrizontal) - 1; j <= Math.max(aOrizontal, bOrizontal) + 1; j++) {
+                    if (arr[i][j].contains("O")) {
+                        toClose = true;
+                        break;
+                    }
+                }
+            }
+        } else if (b.charAt(1) == a.charAt(1)) {
+            varJ = Integer.parseInt(a.charAt(1) + "");
+            int indexOfLetterA = 0;
+            int indexOfLetterB = 0;
+
+            for (int i = 0; i < arr.length; i++) {
+                for (int j = 0; j < arr[i].length; j++) {
+                    if ((a.charAt(0) + "").equals(arr[i][j])) {
+                        indexOfLetterA = i;
+                    }
+                    if ((b.charAt(0) + "").equals(arr[i][j])) {
+                        indexOfLetterB = i;
+                    }
+                }
+            }
+            for (int i = Math.min(indexOfLetterA, indexOfLetterB) - 1; i <= Math.max(indexOfLetterA, indexOfLetterB) + 1; i++) {
+                for (int j = varJ - 1; j <= varJ + 1; j++) {
+                    if (arr[i][j].contains("O")) {
+                        toClose = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return toClose;
+    }
+
 }
