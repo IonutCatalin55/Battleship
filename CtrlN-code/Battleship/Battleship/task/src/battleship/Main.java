@@ -28,6 +28,9 @@ public class Main {
                     break;
                 }
             }
+            // trebuie refacut pt stringuri mai mari de 2
+
+            // si trebuie modificate tuUpperCasenpt fiecar input
             while (true) {
                 if (aircraftCarrier.horizontalNumberCheck(a, b, 5) &&
                         aircraftCarrier.verticalLetterCheck(a, b, 5) &&
@@ -40,6 +43,7 @@ public class Main {
                     b = scanner.next();
                 }
             }
+            System.out.println("Enter the coordinates of the Battleship (4 cells):");
         }
 
     }
