@@ -1,5 +1,7 @@
 package battleship;
 
+import java.util.Objects;
+
 public class Battleship {
 
     public boolean diagonal = true;
@@ -93,6 +95,7 @@ public class Battleship {
     public void printBattleField(String a, String b, String[][] arr) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
+                if(!Objects.equals(arr[i][j], "O"))
                 arr[i][j] = "~";
                 arr[i][0] = LETTER_1[i];
                 arr[0][j] = NUM[j];
